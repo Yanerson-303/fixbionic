@@ -1,0 +1,220 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  padding: 20px;
+}
+
+h2 {
+  margin-top: 40px;
+  color: #333;
+}
+
+form {
+  margin-bottom: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input, select, button {
+  padding: 8px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+th {
+  background-color: #333;
+  color: white;
+}
+
+.estado-entregado {
+  background-color: #c8e6c9;
+}
+.estado-pendiente {
+  background-color: #ffcdd2;
+}
+.estado-nulo {
+  background-color: #ffffff;
+}
+.seleccionada {
+  background-color: #ffe082 !important;
+}
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  padding: 20px;
+}
+
+h2 {
+  margin-top: 40px;
+  color: #333;
+}
+
+form {
+  margin-bottom: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input, select, button {
+  padding: 8px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+th {
+  background-color: #333;
+  color: white;
+}
+
+.estado-entregado {
+  background-color: #c8e6c9;
+}
+.estado-pendiente {
+  background-color: #ffcdd2;
+}
+.estado-nulo {
+  background-color: #ffffff;
+}
+.seleccionada {
+  background-color: #ffe082 !important;
+}
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h2, h3 {
+      margin-bottom: 10px;
+    }
+
+    #registro-accesorios form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    #registro-accesorios input,
+    #registro-accesorios button {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    #registro-accesorios button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+
+    #registro-accesorios button:hover {
+      background-color: #0056b3;
+    }
+
+    .contenedor {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    #lista-accesorios {
+      flex: 1 1 50%;
+    }
+
+    #grafico-metricas {
+      flex: 1 1 45%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f1f1f1;
+      font-weight: 600;
+    }
+
+    #metricas table {
+      margin-top: 20px;
+    }
+
+    .seleccionada {
+      background-color: #d1ecf1 !important;
+    }
+
+    button {
+      margin-top: 10px;
+    }

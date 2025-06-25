@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema Técnico y Accesorios</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+
+  </style>
+</head>
+<body>
+
+  <h2>Registro de Accesorios</h2>
+
+  <!-- Formulario -->
+  <section id="registro-accesorios">
+    <form id="form-accesorios">
+      <input type="date" id="fechaAcc" required>
+      <input type="text" id="nombreAcc" placeholder="Nombre del Accesorio" required>
+      <input type="text" id="categoriaAcc" placeholder="Categoría (ej: cargador, funda...)" required>
+      <input type="number" id="precioAcc" placeholder="Precio (COP)" required>
+      <input type="number" id="cantidadAcc" placeholder="Cantidad" required>
+      <input type="text" id="observacionesAcc" placeholder="Observaciones">
+      <button type="submit">Agregar Accesorio</button>
+    </form>
+  </section>
+
+  <!-- Contenido principal dividido -->
+  <div class="contenedor">
+
+    <!-- Tabla de Accesorios -->
+    <section id="lista-accesorios">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Observaciones</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-accesorios">
+          <!-- Datos dinámicos -->
+        </tbody>
+      </table>
+      <button onclick="eliminarAccesorioSeleccionado()">Eliminar Accesorio Seleccionado</button>
+    </section>
+
+    <!-- Gráfico + Métricas -->
+    <section id="grafico-metricas">
+      <h3>Métricas por Categoría</h3>
+      <canvas id="graficoAccesorios" width="400" height="200"></canvas>
+
+      <!-- Tabla de Métricas -->
+      <section id="metricas">
+        <h3>Métricas del Inventario</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Total de Registros</th>
+              <th>Total de Unidades</th>
+              <th>Valor Total (COP)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="total-registros">0</td>
+              <td id="total-unidades">0</td>
+              <td id="valor-total">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+
+  </div>
+
+  <!-- Script principal -->
+  <script src="code.js"></script>
+
+</body>
+</html>
+
