@@ -52,6 +52,16 @@ function agregarFila(data, guardar) {
     if (filaSeleccionada) filaSeleccionada.classList.remove('seleccionada');
     filaSeleccionada = fila;
     filaSeleccionada.classList.add('seleccionada');
+
+    // Llenar el formulario con los datos seleccionados
+    document.getElementById('fecha').value = data.fecha;
+    document.getElementById('cliente').value = data.cliente;
+    document.getElementById('modelo').value = data.modelo;
+    document.getElementById('reparacion').value = data.reparacion;
+    document.getElementById('tecnico').value = data.tecnico;
+    document.getElementById('notas').value = data.notas;
+    document.getElementById('controlID').value = data.controlID;
+    document.getElementById('estado').value = data.estado;
   });
 
   tabla.appendChild(fila);
@@ -84,6 +94,56 @@ function eliminarSeleccionada() {
   localStorage.setItem('reparaciones', JSON.stringify(datosGuardados));
 
   alert('Reparación eliminada con éxito.');
+  actualizarMetricas();
+}
+
+function editarSeleccionada() {
+  if (!filaSeleccionada) {
+    alert('Selecciona una fila para editar.');
+    return;
+  }
+
+  const confirmPass = prompt('Ingresa la contraseña para editar:');
+  if (confirmPass !== passwordEliminar) {
+    alert('Contraseña incorrecta.');
+    return;
+  }
+
+  const nuevaReparacion = {
+    fecha: document.getElementById('fecha').value,
+    cliente: document.getElementById('cliente').value,
+    modelo: document.getElementById('modelo').value,
+    reparacion: document.getElementById('reparacion').value,
+    tecnico: document.getElementById('tecnico').value,
+    notas: document.getElementById('notas').value,
+    controlID: document.getElementById('controlID').value,
+    estado: document.getElementById('estado').value
+  };
+
+  let datosGuardados = JSON.parse(localStorage.getItem('reparaciones')) || [];
+  const index = datosGuardados.findIndex(d => d.controlID === filaSeleccionada.children[6].textContent);
+  if (index !== -1) {
+    datosGuardados[index] = nuevaReparacion;
+    localStorage.setItem('reparaciones', JSON.stringify(datosGuardados));
+  }
+
+  filaSeleccionada.innerHTML = `
+    <td>${nuevaReparacion.fecha}</td>
+    <td>${nuevaReparacion.cliente}</td>
+    <td>${nuevaReparacion.modelo}</td>
+    <td>${nuevaReparacion.reparacion}</td>
+    <td>${nuevaReparacion.tecnico}</td>
+    <td>${nuevaReparacion.notas}</td>
+    <td>${nuevaReparacion.controlID}</td>
+    <td class="${nuevaReparacion.estado === 'entregado' ? 'estado-entregado' : nuevaReparacion.estado === 'pendiente' ? 'estado-pendiente' : 'estado-nulo'}">
+      ${nuevaReparacion.estado.charAt(0).toUpperCase() + nuevaReparacion.estado.slice(1)}
+    </td>
+  `;
+
+  alert('Reparación editada con éxito.');
+  formulario.reset();
+  filaSeleccionada.classList.remove('seleccionada');
+  filaSeleccionada = null;
   actualizarMetricas();
 }
 
@@ -129,3 +189,5 @@ function actualizarMetricas() {
     }
   });
 }
+
+

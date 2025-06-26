@@ -38,6 +38,8 @@
       </select>
 
       <button type="submit">Agregar Reparación</button>
+      <button onclick="editarSeleccionada()">Editar Reparación</button>
+              <button onclick="eliminarSeleccionada()">Eliminar Reparación Seleccionada</button>
     </form>
   </section>
 
@@ -62,8 +64,9 @@
         <tbody id="tabla-reparaciones">
           <!-- Datos dinámicos -->
         </tbody>
+
       </table>
-      <button onclick="eliminarSeleccionada()">Eliminar Reparación Seleccionada</button>
+
     </section>
 
     <!-- Gráfico + Métricas (Derecha) -->
