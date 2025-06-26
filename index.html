@@ -1,101 +1,16 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Registro de Reparaciones</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
 <body>
-
-  <h2>Registro de Reparaciones de Celulares</h2>
-
-  <!-- Formulario -->
-  <section id="registro-reparaciones">
-    <form id="formulario">
-      <input type="date" id="fecha" required>
-      <input type="text" id="cliente" placeholder="Cliente" required>
-      <input type="text" id="modelo" placeholder="Modelo Celular" required>
-      <input type="text" id="reparacion" placeholder="Reparación" required>
-      
-      <select id="tecnico" required>
-        <option value="">Selecciona Técnico</option>
-        <option value="Santiago">Santiago</option>
-        <option value="Jonathan">Jonathan</option>
-        <option value="Ivan">Ivan</option>
-        <option value="Diego">Diego</option>
-        <option value="Alex">Alex</option>
-        <option value="Otro">Otro</option>  
-      </select>
-
-      <input type="text" id="notas" placeholder="Notas">
-      <input type="text" id="controlID" placeholder="Control ID" required>
-
-      <select id="estado">
-        <option value="nulo">No se ha hecho nada</option>
-        <option value="pendiente">Reparado pero no entregado</option>
-        <option value="entregado">Entregado</option>
-      </select>
-
-      <button type="submit">Agregar Reparación</button>
-    </form>
+  <section>
+<a href="reparacion/index.html">reparacion</a>
   </section>
-
-  <!-- Contenido principal dividido -->
-  <div class="contenedor">
-
-    <!-- Tabla de Reparaciones (Izquierda) -->
-    <section id="tabla-seccion">
-      <table>
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Cliente</th>
-            <th>Modelo</th>
-            <th>Reparación</th>
-            <th>Técnico</th>
-            <th>Notas</th>
-            <th>Control ID</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody id="tabla-reparaciones">
-          <!-- Datos dinámicos -->
-        </tbody>
-      </table>
-      <button onclick="eliminarSeleccionada()">Eliminar Reparación Seleccionada</button>
-    </section>
-
-    <!-- Gráfico + Métricas (Derecha) -->
-    <section id="grafico-seccion">
-      <h3>Reparaciones por Estado</h3>
-      <canvas id="graficoReparaciones"></canvas>
-
-      <section id="metricas">
-        <h3>Métricas Totales</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Reparaciones</th>
-              <th>Pendientes</th>
-              <th>Entregadas</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td id="total-reparaciones">0</td>
-              <td id="total-pendientes">0</td>
-              <td id="total-entregadas">0</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-    </section>
-
-  </div>
-
-  <!-- Script principal -->
-  <script src="code.js"></script>
-
+    <section>
+      <a href="acsesorios/index.html">acsesorios</a>
+  </section>
 </body>
 </html>
