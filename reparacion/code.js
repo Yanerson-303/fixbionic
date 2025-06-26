@@ -16,6 +16,7 @@ formulario.addEventListener('submit', function (e) {
   const nuevaReparacion = {
     fecha: document.getElementById('fecha').value,
     cliente: document.getElementById('cliente').value,
+    telefono: document.getElementById('telefono').value,
     modelo: document.getElementById('modelo').value,
     reparacion: document.getElementById('reparacion').value,
     tecnico: document.getElementById('tecnico').value,
@@ -40,6 +41,7 @@ function agregarFila(data, guardar) {
   fila.innerHTML = `
     <td>${data.fecha}</td>
     <td>${data.cliente}</td>
+    <td>${data.telefono}</td>
     <td>${data.modelo}</td>
     <td>${data.reparacion}</td>
     <td>${data.tecnico}</td>
@@ -53,9 +55,10 @@ function agregarFila(data, guardar) {
     filaSeleccionada = fila;
     filaSeleccionada.classList.add('seleccionada');
 
-    // Llenar el formulario con los datos seleccionados
+    // Llenar el formulario con los datos de la fila
     document.getElementById('fecha').value = data.fecha;
     document.getElementById('cliente').value = data.cliente;
+    document.getElementById('telefono').value = data.telefono;
     document.getElementById('modelo').value = data.modelo;
     document.getElementById('reparacion').value = data.reparacion;
     document.getElementById('tecnico').value = data.tecnico;
@@ -85,7 +88,7 @@ function eliminarSeleccionada() {
     return;
   }
 
-  const controlID = filaSeleccionada.children[6].textContent;
+  const controlID = filaSeleccionada.children[7].textContent;
   filaSeleccionada.remove();
   filaSeleccionada = null;
 
@@ -112,6 +115,7 @@ function editarSeleccionada() {
   const nuevaReparacion = {
     fecha: document.getElementById('fecha').value,
     cliente: document.getElementById('cliente').value,
+    telefono: document.getElementById('telefono').value,
     modelo: document.getElementById('modelo').value,
     reparacion: document.getElementById('reparacion').value,
     tecnico: document.getElementById('tecnico').value,
@@ -121,7 +125,7 @@ function editarSeleccionada() {
   };
 
   let datosGuardados = JSON.parse(localStorage.getItem('reparaciones')) || [];
-  const index = datosGuardados.findIndex(d => d.controlID === filaSeleccionada.children[6].textContent);
+  const index = datosGuardados.findIndex(d => d.controlID === filaSeleccionada.children[7].textContent);
   if (index !== -1) {
     datosGuardados[index] = nuevaReparacion;
     localStorage.setItem('reparaciones', JSON.stringify(datosGuardados));
@@ -130,6 +134,7 @@ function editarSeleccionada() {
   filaSeleccionada.innerHTML = `
     <td>${nuevaReparacion.fecha}</td>
     <td>${nuevaReparacion.cliente}</td>
+    <td>${nuevaReparacion.telefono}</td>
     <td>${nuevaReparacion.modelo}</td>
     <td>${nuevaReparacion.reparacion}</td>
     <td>${nuevaReparacion.tecnico}</td>
@@ -189,5 +194,3 @@ function actualizarMetricas() {
     }
   });
 }
-
-

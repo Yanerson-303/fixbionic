@@ -17,6 +17,9 @@
       <input type="text" id="cliente" placeholder="Cliente" required>
       <input type="text" id="modelo" placeholder="Modelo Celular" required>
       <input type="text" id="reparacion" placeholder="Reparación" required>
+
+<input type="text" id="telefono" placeholder="Teléfono" required>
+
       
       <select id="tecnico" required>
         <option value="">Selecciona Técnico</option>
@@ -49,18 +52,20 @@
     <!-- Tabla de Reparaciones (Izquierda) -->
     <section id="tabla-seccion">
       <table>
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Cliente</th>
-            <th>Modelo</th>
-            <th>Reparación</th>
-            <th>Técnico</th>
-            <th>Notas</th>
-            <th>Control ID</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
+<thead>
+  <tr>
+    <th>Fecha</th>
+    <th>Cliente</th>
+    <th>Teléfono</th>
+    <th>Modelo</th>
+    <th>Reparación</th>
+    <th>Técnico</th>
+    <th>Notas</th>
+    <th>ID</th>
+    <th>Estado</th>
+  </tr>
+</thead>
+
         <tbody id="tabla-reparaciones">
           <!-- Datos dinámicos -->
         </tbody>
