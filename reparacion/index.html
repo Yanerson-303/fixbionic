@@ -1,109 +1,251 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Registro de Reparaciones</title>
-  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h2, h3 {
+      margin-bottom: 10px;
+    }
+
+    .contenedor-principal {
+      display: flex;
+      gap: 20px;
+    }
+
+    .seccion-izquierda,
+    .seccion-derecha {
+      flex: 1;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input, select, button {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+    }
+
+    th {
+      background-color: #333;
+      color: white;
+    }
+
+    .estado-entregado {
+      background-color: #c8e6c9;
+    }
+
+    .estado-pendiente {
+      background-color: #ffcdd2;
+    }
+
+    .estado-nulo {
+      background-color: #ffffff;
+    }
+
+    .seleccionada {
+      background-color: #d1ecf1 !important;
+    }
+
+    #patron-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 40px);
+      grid-gap: 10px;
+      justify-content: center;
+      margin: 10px 0;
+    }
+
+    .patron-btn {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+
+    .patron-btn.active {
+      background-color: #4dd0e1;
+      color: #fff;
+    }
+
+    .grafico-container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #graficoReparaciones {
+      max-width: 450px;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .metricas-container {
+      text-align: center;
+    }
+
+    #contenedor-exportacion {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
+  <h2>Registro de Reparaciones</h2>
 
-  <h2>Registro de Reparaciones de Celulares</h2>
+  <div class="contenedor-principal">
+    <!-- IZQUIERDA: FORMULARIO + TABLA -->
+    <div class="seccion-izquierda">
+      <form id="formulario" autocomplete="off">
+        <input type="date" id="fecha" required />
+        <input type="text" id="cliente" placeholder="Cliente" required />
+        <input type="text" id="telefono" placeholder="Teléfono" required />
+        <input type="text" id="modelo" placeholder="Modelo del celular" required />
+        <input type="text" id="reparacion" placeholder="Tipo de reparación" required />
+        <select id="tecnico" required>
+          <option value="">Selecciona Técnico</option>
+          <option value="Santiago">Santiago</option>
+          <option value="Jonathan">Jonathan</option>
+          <option value="Ivan">Ivan</option>
+          <option value="Diego">Diego</option>
+          <option value="Alex">Alex</option>
+          <option value="Harold">Harold</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <input type="text" id="notas" placeholder="Notas adicionales" />
+        <input type="text" id="controlID" placeholder="Control ID" required />
+        <select id="estado" required>
+          <option value="nulo">No se ha hecho nada</option>
+          <option value="pendiente">Reparado pero no entregado</option>
+          <option value="entregado">Entregado</option>
+        </select>
 
-  <!-- Formulario -->
-  <section id="registro-reparaciones">
-    <form id="formulario">
-      <input type="date" id="fecha" required>
-      <input type="text" id="cliente" placeholder="Cliente" required>
-      <input type="text" id="modelo" placeholder="Modelo Celular" required>
-      <input type="text" id="reparacion" placeholder="Reparación" required>
+        <label for="tipo-contrasena">Tipo de Contraseña</label>
+        <select id="tipo-contrasena" required>
+          <option value="">Selecciona tipo</option>
+          <option value="pin">PIN / Palabra</option>
+          <option value="patron">Patrón Gráfico</option>
+        </select>
+        <input type="text" id="contrasena" placeholder="PIN o palabra" style="display: none;" />
 
-<input type="text" id="telefono" placeholder="Teléfono" required>
+        <div id="patron-container" style="display: none;">
+          <div id="patron-grid">
+            <button type="button" class="patron-btn" data-num="1">1</button>
+            <button type="button" class="patron-btn" data-num="2">2</button>
+            <button type="button" class="patron-btn" data-num="3">3</button>
+            <button type="button" class="patron-btn" data-num="4">4</button>
+            <button type="button" class="patron-btn" data-num="5">5</button>
+            <button type="button" class="patron-btn" data-num="6">6</button>
+            <button type="button" class="patron-btn" data-num="7">7</button>
+            <button type="button" class="patron-btn" data-num="8">8</button>
+            <button type="button" class="patron-btn" data-num="9">9</button>
+          </div>
+          <small>Haz clic en los puntos en orden para establecer el patrón</small>
+        </div>
 
-      
-      <select id="tecnico" required>
-        <option value="">Selecciona Técnico</option>
-        <option value="Santiago">Santiago</option>
-        <option value="Jonathan">Jonathan</option>
-        <option value="Ivan">Ivan</option>
-        <option value="Diego">Diego</option>
-        <option value="Alex">Alex</option>
-        <option value="Otro">Otro</option>  
-      </select>
+        <input type="hidden" id="patron-input" />
+        <p class="error" id="errorPatron" style="display: none; color: red;">Debe ingresar un patrón válido.</p>
 
-      <input type="text" id="notas" placeholder="Notas">
-      <input type="text" id="controlID" placeholder="Control ID" required>
+        <button type="submit">Agregar Reparación</button>
+        <button type="button" id="btn-editar">Editar</button>
+        <button type="button" id="btn-eliminar">Eliminar</button>
+        <button type="button" id="btn-export-excel">Exportar Excel</button>
+        <button type="button" id="btn-export-json">Exportar JSON</button>
+        <button type="button" id="btn-descargar-imagen">Descargar Imagen</button>
+        <input type="file" id="importarBD" />
+        <input type="text" placeholder="Buscar..." id="buscarInput" />
+      </form>
 
-      <select id="estado">
-        <option value="nulo">No se ha hecho nada</option>
-        <option value="pendiente">Reparado pero no entregado</option>
-        <option value="entregado">Entregado</option>
-      </select>
-
-      <button type="submit">Agregar Reparación</button>
-      <button onclick="editarSeleccionada()">Editar Reparación</button>
-              <button onclick="eliminarSeleccionada()">Eliminar Reparación Seleccionada</button>
-    </form>
-  </section>
-
-  <!-- Contenido principal dividido -->
-  <div class="contenedor">
-
-    <!-- Tabla de Reparaciones (Izquierda) -->
-    <section id="tabla-seccion">
       <table>
-<thead>
-  <tr>
-    <th>Fecha</th>
-    <th>Cliente</th>
-    <th>Teléfono</th>
-    <th>Modelo</th>
-    <th>Reparación</th>
-    <th>Técnico</th>
-    <th>Notas</th>
-    <th>ID</th>
-    <th>Estado</th>
-  </tr>
-</thead>
-
-        <tbody id="tabla-reparaciones">
-          <!-- Datos dinámicos -->
-        </tbody>
-
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Teléfono</th>
+            <th>Modelo</th>
+            <th>Reparación</th>
+            <th>Técnico</th>
+            <th>Notas</th>
+            <th>Control ID</th>
+            <th>Estado</th>
+            <th>Contraseña</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-reparaciones"></tbody>
       </table>
+    </div>
 
-    </section>
-
-    <!-- Gráfico + Métricas (Derecha) -->
-    <section id="grafico-seccion">
-      <h3>Reparaciones por Estado</h3>
-      <canvas id="graficoReparaciones"></canvas>
-
-      <section id="metricas">
-        <h3>Métricas Totales</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Reparaciones</th>
-              <th>Pendientes</th>
-              <th>Entregadas</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td id="total-reparaciones">0</td>
-              <td id="total-pendientes">0</td>
-              <td id="total-entregadas">0</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-    </section>
-
+    <!-- DERECHA: GRÁFICA CENTRADA + MÉTRICAS -->
+    <div class="seccion-derecha">
+      <div class="grafico-container">
+        <canvas id="graficoReparaciones"></canvas>
+        <div class="metricas-container">
+          <p>Total: <span id="total-reparaciones">0</span></p>
+          <p>Pendientes: <span id="total-pendientes">0</span></p>
+          <p>Entregadas: <span id="total-entregadas">0</span></p>
+        </div>
+      </div>
+      <div id="contenedor-exportacion"></div>
+    </div>
   </div>
 
-  <!-- Script principal -->
-  <script src="code.js"></script>
-
+  <script type="module" src="cluster/estructura/laboratorio/union.js"></script>
 </body>
 </html>

@@ -5,9 +5,8 @@
   <title>Sistema Técnico y Accesorios</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-
-  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -22,11 +21,26 @@
       <input type="number" id="precioAcc" placeholder="Precio (COP)" required>
       <input type="number" id="cantidadAcc" placeholder="Cantidad" required>
       <input type="text" id="observacionesAcc" placeholder="Observaciones">
+      <input type="text" id="clienteAcc" placeholder="Nombre del Cliente">
+      <input type="text" id="contactoAcc" placeholder="Número de Contacto">
+
       <button type="submit">Agregar Accesorio</button>
+      <button type="button" id="btnEliminar">Eliminar Accesorio Seleccionado</button>
+      <button type="button" id="btnEditar">Editar Accesorio Seleccionado</button>
+
+      <div style="margin-top: 10px;">
+        <button type="button" id="exportarImagenBtn">Exportar como Imagen</button>
+        <button type="button" id="exportarExcelBtn">Exportar a Excel</button>
+        <button type="button" id="exportarJsonBtn">Exportar Base de Datos</button>
+        <input type="file" id="importarBD" accept=".json" />
+      </div>
     </form>
+
+    <!-- Contenedor oculto para exportar como imagen -->
+    <div id="contenedor-exportacion" style="display:none; padding:20px; font-family:sans-serif; width:400px; border:1px solid #ccc; background:#fff;"></div>
   </section>
 
-  <!-- Contenido principal dividido -->
+  <!-- Contenido principal -->
   <div class="contenedor">
 
     <!-- Tabla de Accesorios -->
@@ -40,13 +54,14 @@
             <th>Precio</th>
             <th>Cantidad</th>
             <th>Observaciones</th>
+            <th>Cliente</th>
+            <th>Contacto</th>
           </tr>
         </thead>
         <tbody id="tabla-accesorios">
           <!-- Datos dinámicos -->
         </tbody>
       </table>
-      <button onclick="eliminarAccesorioSeleccionado()">Eliminar Accesorio Seleccionado</button>
     </section>
 
     <!-- Gráfico + Métricas -->
@@ -54,7 +69,6 @@
       <h3>Métricas por Categoría</h3>
       <canvas id="graficoAccesorios" width="400" height="200"></canvas>
 
-      <!-- Tabla de Métricas -->
       <section id="metricas">
         <h3>Métricas del Inventario</h3>
         <table>
@@ -78,9 +92,6 @@
 
   </div>
 
-  <!-- Script principal -->
-  <script src="code.js"></script>
-
+  <script src="code.js" defer></script>
 </body>
 </html>
-
