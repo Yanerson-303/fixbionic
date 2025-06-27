@@ -6,146 +6,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f8f9fa;
-      margin: 0;
-      padding: 20px;
-      color: #333;
-    }
-
-    h2, h3 {
-      margin-bottom: 10px;
-    }
-
-    .contenedor-principal {
-      display: flex;
-      gap: 20px;
-    }
-
-    .seccion-izquierda,
-    .seccion-derecha {
-      flex: 1;
-    }
-
-    form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    input, select, button {
-      padding: 8px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    button {
-      background-color: #007bff;
-      color: white;
-      cursor: pointer;
-      border: none;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-      margin-bottom: 20px;
-    }
-
-    th, td {
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-      text-align: center;
-    }
-
-    th {
-      background-color: #333;
-      color: white;
-    }
-
-    .estado-entregado {
-      background-color: #c8e6c9;
-    }
-
-    .estado-pendiente {
-      background-color: #ffcdd2;
-    }
-
-    .estado-nulo {
-      background-color: #ffffff;
-    }
-
-    .seleccionada {
-      background-color: #d1ecf1 !important;
-    }
-
-    #patron-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 40px);
-      grid-gap: 10px;
-      justify-content: center;
-      margin: 10px 0;
-    }
-
-    .patron-btn {
-      width: 40px;
-      height: 40px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 50%;
-      background-color: #f0f0f0;
-      cursor: pointer;
-    }
-
-    .patron-btn.active {
-      background-color: #4dd0e1;
-      color: #fff;
-    }
-
-    .grafico-container {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    #graficoReparaciones {
-      max-width: 450px;
-      width: 100%;
-      height: auto;
-      margin: 0 auto;
-    }
-
-    .metricas-container {
-      text-align: center;
-    }
-
-    #contenedor-exportacion {
-      margin-top: 20px;
-    }
-  </style>
+<link rel="stylesheet" href="cluster/estilos/style.css">
 </head>
 <body>
   <h2>Registro de Reparaciones</h2>
@@ -164,7 +25,7 @@
           <option value="Santiago">Santiago</option>
           <option value="Jonathan">Jonathan</option>
           <option value="Ivan">Ivan</option>
-          <option value="Diego">Diego</option>
+          <option value="Diego">Deivid</option>
           <option value="Alex">Alex</option>
           <option value="Harold">Harold</option>
           <option value="Otro">Otro</option>

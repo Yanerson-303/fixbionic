@@ -1,5 +1,5 @@
 // === MÓDULO ESTADO ===
-export const state = {
+const state = {
   patronActual: [],
   set(prop, val) {
     this[prop] = val;
@@ -7,7 +7,7 @@ export const state = {
 };
 
 // === MÓDULO PATRÓN ===
-export function mostrarCampoContrasena() {
+function mostrarCampoContrasena() {
   const tipo = document.getElementById('tipo-contrasena').value;
   const pin = document.getElementById('contrasena');
   const patron = document.getElementById('patron-container');
@@ -22,7 +22,7 @@ export function mostrarCampoContrasena() {
   document.getElementById('patron-input').value = '';
 }
 
-export function manejarPatron() {
+function manejarPatron() {
   document.querySelectorAll('.patron-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const valor = btn.dataset.num;
@@ -54,8 +54,6 @@ document.getElementById('tipo-contrasena').addEventListener('change', mostrarCam
 document.getElementById('btn-eliminar').addEventListener('click', eliminarSeleccionada);
 document.getElementById('btn-editar').addEventListener('click', editarSeleccionada);
 document.getElementById('buscarInput').addEventListener('input', e => buscarReparacion(e.target.value));
-
-// NUEVO: botón descargar imagen fila seleccionada
 document.getElementById('btn-descargar-imagen').addEventListener('click', exportarSeleccionadaComoImagen);
 
 formulario.addEventListener('submit', e => {
@@ -89,7 +87,7 @@ formulario.addEventListener('submit', e => {
   actualizarMetricas();
 });
 
-// === FUNCIONES CRUD ===
+// === CRUD Y FUNCIONES DE NEGOCIO ===
 function cargarDesdeLocalStorage() {
   const datos = JSON.parse(localStorage.getItem('reparaciones')) || [];
   datos.forEach(dato => agregarFila(dato, false));
@@ -145,11 +143,7 @@ function seleccionarFila(fila, data) {
     state.set('patronActual', data.contrasena.split('-'));
     document.getElementById('patron-input').value = data.contrasena;
     document.querySelectorAll('.patron-btn').forEach(btn => {
-      if (state.patronActual.includes(btn.dataset.num)) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
+      btn.classList.toggle('active', state.patronActual.includes(btn.dataset.num));
     });
   } else {
     document.getElementById('contrasena').value = data.contrasena;
@@ -197,23 +191,11 @@ function editarSeleccionada() {
   if (idx !== -1) datos[idx] = reparacionEditada;
   localStorage.setItem('reparaciones', JSON.stringify(datos));
 
-  filaSeleccionada.innerHTML = `
-    <td>${reparacionEditada.fecha}</td>
-    <td>${reparacionEditada.cliente}</td>
-    <td>${reparacionEditada.telefono}</td>
-    <td>${reparacionEditada.modelo}</td>
-    <td>${reparacionEditada.reparacion}</td>
-    <td>${reparacionEditada.tecnico}</td>
-    <td>${reparacionEditada.notas}</td>
-    <td>${reparacionEditada.controlID}</td>
-    <td class="${reparacionEditada.estado === 'entregado' ? 'estado-entregado' : reparacionEditada.estado === 'pendiente' ? 'estado-pendiente' : 'estado-nulo'}">${capitalize(reparacionEditada.estado)}</td>
-    <td>${reparacionEditada.contrasena}</td>
-  `;
-
+  agregarFila(reparacionEditada, false);
+  filaSeleccionada.remove();
   alert('Reparación actualizada.');
   formulario.reset();
   mostrarCampoContrasena();
-  filaSeleccionada.classList.remove('seleccionada');
   filaSeleccionada = null;
   actualizarMetricas();
 }
@@ -251,7 +233,6 @@ function actualizarMetricas() {
   });
 }
 
-// === BÚSQUEDA ===
 function buscarReparacion(valor) {
   const datos = JSON.parse(localStorage.getItem('reparaciones')) || [];
   tabla.innerHTML = '';
@@ -266,45 +247,31 @@ function buscarReparacion(valor) {
   });
 }
 
-// === UTILIDAD ===
 function capitalize(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
+
 function exportarSeleccionadaComoImagen() {
   if (!filaSeleccionada) return alert('Selecciona una fila.');
 
   const celdas = filaSeleccionada.children;
   const contenedor = document.getElementById('contenedor-exportacion');
-  if (!contenedor) {
-    alert('No se encontró el contenedor para exportar la imagen.');
-    return;
-  }
+  if (!contenedor) return alert('No se encontró el contenedor para exportar la imagen.');
 
   const fechaHoy = new Date().toLocaleDateString('es-CO');
-  const facturaID = "FBX-" + Date.now().toString().slice(-6);
+  const facturaID = 'FBX-' + Date.now().toString().slice(-6);
 
   contenedor.innerHTML = `
-    <div id="factura-fixbionix" style="
-      width: 350px;
-      padding: 20px;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      font-weight: bold;
-      background: #fff;
-      color: #000;
-      border: 2px solid #000;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    ">
+    <div id="factura-fixbionic" style="width: 350px; padding: 20px; font-family: 'Courier New'; font-size: 14px; font-weight: bold; background: #fff; color: #000; border: 2px solid #000; box-shadow: 2px 2px 10px rgba(0,0,0,0.1);">
       <div style="text-align: center;">
-        <h2 style="margin: 0; font-size: 20px;">FIX BIONIX</h2>
+        <h2 style="margin: 0; font-size: 20px;">FIX BIONIC</h2>
         <p style="margin: 2px 0;">Centro de Servicio Técnico</p>
         <p style="margin: 2px 0;">NIT: 1022421675-9</p>
         <p style="margin: 2px 0;">CC Arquicentro, Itagüí - Local 102</p>
-        <p style="margin: 2px 0;">www.fixbionix.com</p>
+        <p style="margin: 2px 0;">www.fixbionic.com</p>
         <hr style="border-top: 2px dashed #000; margin: 10px 0;" />
         <p style="margin: 2px 0;"><strong>FACTURA No: ${facturaID}</strong></p>
       </div>
-
       <table style="width: 100%; margin-top: 10px; font-size: 13px;">
         <tr><td>Fecha:</td><td style="text-align:right;">${celdas[0].textContent}</td></tr>
         <tr><td>Cliente:</td><td style="text-align:right;">${celdas[1].textContent}</td></tr>
@@ -317,7 +284,6 @@ function exportarSeleccionadaComoImagen() {
         <tr><td>Estado:</td><td style="text-align:right;">${celdas[8].textContent}</td></tr>
         <tr><td>Contraseña:</td><td style="text-align:right;">${celdas[9].textContent}</td></tr>
       </table>
-
       <hr style="border-top: 1px dashed #000; margin: 10px 0;" />
       <div style="text-align: center; font-size: 11px;">
         <p>Gracias por confiar en nosotros.</p>
@@ -325,9 +291,10 @@ function exportarSeleccionadaComoImagen() {
       </div>
     </div>
   `;
+
   contenedor.style.display = 'block';
 
-  html2canvas(document.getElementById('factura-fixbionix'), {
+  html2canvas(document.getElementById('factura-fixbionic'), {
     scale: 6,
     useCORS: true,
     backgroundColor: "#fff"
